@@ -1,19 +1,19 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api", // ou a URL do seu backend
+  baseURL: "http://localhost:8000/api", // Altere para a URL do seu backend
+  withCredentials: true, // Permite enviar cookies com credenciais
   headers: {
-    "X-Requested-With": "XMLHttpRequest", // Requerido pelo Laravel para AJAX
+    "X-Requested-With": "XMLHttpRequest", // Requerido pelo Laravel para requisições AJAX
   },
 });
 
-// Primeiro, faz uma requisição para obter o token CSRF
-api
-  .get("/csrf-cookie", {
-    withCredentials: true,
-  })
-  .then(() => {
-    console.log("CSRF Token obtido");
-  });
+// Primeiro, busca o token CSRF antes de qualquer requisição
+async function getCsrfToken() {
+  const response = await api.get("/csrf-token");
+  axios.defaults.headers.common["X-CSRF-TOKEN"] = response.data.csrf_token;
+}
+
+getCsrfToken();
 
 export default api;
