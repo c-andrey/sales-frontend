@@ -25,6 +25,8 @@ export default defineComponent({
       sellerToEdit.value = seller;
     };
 
+    fetchSellers();
+
     return { sellers, fetchSellers, sellerToEdit, setSellerToEdit };
   },
 });

@@ -68,7 +68,7 @@ export default defineComponent({
       }
       name.value = "";
       email.value = "";
-      emit("created"); // Atualiza a lista
+      emit("created");
     };
 
     return { name, email, handleSubmit };
