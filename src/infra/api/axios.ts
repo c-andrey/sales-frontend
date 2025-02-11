@@ -1,10 +1,19 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: "http://localhost:9000/api", // Altere conforme necessário
+const api = axios.create({
+  baseURL: "http://localhost:8000/api", // ou a URL do seu backend
   headers: {
-    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest", // Requerido pelo Laravel para AJAX
   },
 });
 
-export default instance;
+// Primeiro, faz uma requisição para obter o token CSRF
+api
+  .get("/csrf-cookie", {
+    withCredentials: true,
+  })
+  .then(() => {
+    console.log("CSRF Token obtido");
+  });
+
+export default api;
